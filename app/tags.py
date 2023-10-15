@@ -8,9 +8,23 @@ data = {}  # Dictionary to store tag-file associations
 
 #markdown_dir = FOLDER if FOLDER != "" else "data"
 markdown_dir = app.config['FOLDER']
+attachments_dir = app.config['ATTACHMENTS']
+
+
+def create_folders(folder):
+	if not os.path.exists(folder):
+		try:
+			os.makedirs(folder)
+			print(f"Folder '{folder}' created successfully.")
+		except OSError as e:
+			print(f"Failed to create folder '{folder}': {e}")
+	else:
+		print(f"Folder '{folder}' already exists.")
 
 
 def load_tags_data():
+	create_folders(markdown_dir)
+	create_folders(attachments_dir)
 	for filename in os.listdir(markdown_dir):
 		if filename.endswith('.md'):
 			file_path = os.path.join(markdown_dir, filename)
@@ -32,9 +46,6 @@ def get_all_notes():
 		loaded_data = json.load(json_file)	
 	return list(loaded_data.keys())
 
-# To load the data back
-#with open('tags.json', 'r') as json_file:
-#	loaded_data = json.load(json_file)
 def get_all_unique_tags():
 	tags_set = set()
 	with open('tags.json', 'r') as json_file:

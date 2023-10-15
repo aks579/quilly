@@ -7,21 +7,11 @@ import re
 from app import tags
 from app.forms import NoteForm, DeleteNoteForm
 
-#folder = FOLDER if FOLDER != "" else "data"
 folder = app.config['FOLDER']
 attachments = app.config['ATTACHMENTS']
 
 @app.route('/')
 def index():
-	#markdown_files = []
-	#folder = FOLDER if FOLDER != "" else "data"
-	#for root, dirs, files in os.walk(folder):
-	#	for file in files:
-	#		if file.endswith('.md'):
-	#			#markdown_files.append(file)
-	#			markdown_files.append(os.path.join(root, file))
-	#markdown_files.sort(key=lambda x: os.path.getmtime(x))
-	#markdown_files = [item.replace(f'{folder}/', '').replace('.md', '') for item in markdown_files]
 	markdown_files = tags.get_all_notes()
 	markdown_dict = {f.replace("_", " "): f for f in markdown_files}  
 	heading = 'All Notes'
@@ -40,7 +30,6 @@ def read_tags(tag):
 
 @app.route('/<file>',methods = ['GET'])
 def read(file):
-	#folder = FOLDER if FOLDER != "" else "data"
 	file_path = f"{folder}/{file}.md"
 	try:
 		with open(file_path, 'r') as f:
@@ -64,7 +53,6 @@ def read(file):
 def create():
 	form = NoteForm()
 	if form.validate_on_submit():
-		#folder = FOLDER if FOLDER != "" else "data"
 		file_name = form.title.data.replace("/","").replace(" ","_")
 		file_path = f"{folder}/{file_name}.md"	
 		try:	
@@ -80,7 +68,6 @@ def create():
 
 @app.route('/<file>/edit',methods = ['GET', 'POST'])
 def edit(file):
-	#folder = FOLDER if FOLDER != "" else "data"
 	file_path = f"{folder}/{file}.md"
 	form = NoteForm()
 	if form.validate_on_submit():
@@ -110,7 +97,6 @@ def edit(file):
 
 @app.route('/<file>/delete',methods = ['GET', 'POST'])
 def delete(file):
-	#folder = FOLDER if FOLDER != "" else "data"
 	file_path = f"{folder}/{file}.md"
 	heading = file.replace("_", " ")
 	form = DeleteNoteForm()
@@ -126,7 +112,8 @@ def delete(file):
 
 @app.route('/attachments/<path:filename>')
 def serve_attachments(filename):
-    return send_from_directory(attachments, filename)
+	path = f"../{attachments}" if attachments == 'data' else attachments
+	return send_from_directory(path, filename)
 
 def replace_tags(match):
 	tag_list = match.group(1).split()

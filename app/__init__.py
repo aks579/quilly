@@ -7,6 +7,6 @@ app.config['DEBUG'] = config.DEBUG
 app.config['FOLDER'] = config.FOLDER
 app.config['ATTACHMENTS'] = config.ATTACHMENTS
 
-from app import routes
 from app import tags
 tags.load_tags_data()
+from app import routes
