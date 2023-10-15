@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ type|capitalize }} note</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="labels">
+            <input type="text" class="search-bar" placeholder="Search...">
+            <p class="add-btn"><a class="btn" href="{{ url_for('create') }}">+ Add note</a></p>
+            <p><a href="/">All notes</a></p>
+            {%- if tags -%}
+                {%- for tag in tags -%}
+                    <p><a href="/tags/{{ tag }}">#{{ tag }}</a></p>
+                {%- endfor -%}
+            {%- endif -%}
+        </div>
+        <div class="content">
+                <form method = post novalidate>
+                    {{ form.csrf_token }}
+                    <div>
+                        {{ form.title( placeholder="Note Title", class="input_title") }}
+                    </div>
+                    <div>
+                        {{ form.note(placeholder="Write your note", class="input_note") }}
+                    </div>
+                    <input type="submit" value="{{ type|capitalize }}"/>
+                </form>
+        </div>
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    </script>
+</body>
+</html>
+

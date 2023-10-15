@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height : 100vh;
+    color: #444;
+    line-height: 1.5;
+}
+
+h1 {
+    line-height: 1;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    display: flex;
+    height : 100%;
+}
+.heading_container{
+    display: flex;
+}
+
+.labels {
+    width: 25%;
+    padding: 20px;
+    position: fixed;
+    overflow-y: auto;
+}
+.heading_actions{
+    width: 25%;
+}
+
+.content {
+    width: 75%;
+    flex-grow: 1;
+    padding: 20px;
+    margin-left: 25%; 
+}
+.heading_content{
+    width: 75%;
+    flex-grow: 1;            
+}
+
+.btn{
+    border: 1px solid black;
+    padding: 4px 6px;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: default;
+    border-radius: 2px;
+    color: black;
+ }
+
+.search-bar {
+    width: 60%;
+    padding: 10px;
+    margin-top: 1.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.right-sidebar{
+    margin-top: 2em;
+    padding: 20px;
+}
+
+.right-sidebar div{
+    cursor: pointer;
+}
+
+.input_title {
+    width: 100%;
+    outline: none;
+    border: none;
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0.67em 0;
+}
+.input_note{
+    width: 100%;
+    height: 700px;
+    border: none;
+    resize: none;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;            
+}
+
+.add-btn{
+    padding : 20px 0; 
+}
+
+.btn:hover {background: #eee;}
