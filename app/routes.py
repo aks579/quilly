@@ -1,4 +1,4 @@
-from flask import jsonify, redirect, url_for, render_template, send_from_directory
+from flask import jsonify, redirect, url_for, render_template, send_from_directory, request
 from app import app
 import os
 import markdown
@@ -64,7 +64,8 @@ def create():
 			print(f"An error occurred while writing to file: {e}")
 			return redirect(url_for('index'))
 		return redirect(url_for('read',file=file_name))
-	return render_template('note.html', form = form, tags=tags.get_all_unique_tags(), type = 'create')
+	heading = 'Create new note'
+	return render_template('index.html', form = form, heading = heading, tags=tags.get_all_unique_tags(), type = 'create')
 
 @app.route('/<file>/edit',methods = ['GET', 'POST'])
 def edit(file):
@@ -93,12 +94,13 @@ def edit(file):
 	except (FileNotFoundError, IOError) as e:
 		print(f"An error occurred while reading the file: {e}")
 		return redirect(url_for('index'))
-	return render_template('note.html', form = form, tags=tags.get_all_unique_tags(), type = 'edit')
+	heading = f'Edit - {file}'
+	return render_template('index.html', form = form, heading=heading, tags=tags.get_all_unique_tags(), type = 'edit')
 
 @app.route('/<file>/delete',methods = ['GET', 'POST'])
 def delete(file):
 	file_path = f"{folder}/{file}.md"
-	heading = file.replace("_", " ")
+	#heading = file.replace("_", " ")
 	form = DeleteNoteForm()
 	if form.validate_on_submit():
 		try:
@@ -108,7 +110,32 @@ def delete(file):
 		except IOError as e:
 			print(f"An error occurred while writing to file: {e}")
 		return redirect(url_for('index'))
-	return render_template('delete-confirmation.html', file=file, heading = heading, form = form, tags=tags.get_all_unique_tags(), type = 'delete')
+	heading = "Delete confirmation"
+	return render_template('index.html', file=file, heading = heading, form = form, tags=tags.get_all_unique_tags(), type = 'delete')
+
+@app.route('/search',methods = ['GET'])
+def search():
+	search_query = request.args.get("q")
+	search_string = search_query.lower()
+	results = []
+	if len(search_query) > 2:
+		for filename in os.listdir(folder):
+			if filename.endswith('.md') and len(results) < 50:
+				print('1')
+				file_path = os.path.join(folder, filename)
+				with open(file_path, 'r') as file:				
+					for line in file:
+						print(line)
+						if search_string in line.lower():
+							results.append(filename)
+							break
+	markdown_dict = {f.replace("_", " ").replace(".md",""): f.replace(".md","") for f in results}  
+	#return jsonify(markdown_dict)
+	heading = f'Search results for "{search_query}"'
+	tags_set = tags.get_all_unique_tags()
+	return render_template('index.html', heading = heading, content = markdown_dict, tags=tags_set, type = 'index')
+
+
 
 @app.route('/attachments/<path:filename>')
 def serve_attachments(filename):

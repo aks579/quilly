@@ -26,10 +26,31 @@
                    {%- for key,value in content.items() -%}
                        <div></p><a href="/{{ value }}">{{ key }}</a></div>
                    {%- endfor -%}
-               {%- endif -%}
+                {%- else -%}
+                    <h5>No notes found!</h5>
+                {%- endif -%}
             {%- endif -%}
             {%- if type == 'read' -%}
                {{ content|safe }}
+            {%- endif -%}
+            {%- if type == 'create' or type == 'edit' -%}
+                <form method = post novalidate>
+                    {{ form.csrf_token }}
+                    <div>
+                        {{ form.title( placeholder="Note Title", class="input_title") }}
+                    </div>
+                    <div>
+                        {{ form.note(placeholder="Write your note", class="input_note") }}
+                    </div>
+                    <input type="submit" value="{{ type|capitalize }}"/>
+                </form>
+            {%- endif -%}
+            {%- if type == 'delete' -%}
+                <p>Are you sure you want to delete the note - <b>{{ file|replace('_', '') }}</b></p>
+                <form method = post novalidate>
+                    {{ form.csrf_token }}
+                    <input type="submit" value="Delete"/> <a class="btn" href="{{ url_for('read',file=file) }}">Cancel</a>
+                </form>
             {%- endif -%}
         </div>
         <div class="right-sidebar">
@@ -47,10 +68,17 @@
       import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
     </script>
     <script type='text/javascript'>
+        document.querySelector("input.search-bar").addEventListener("keypress", function(event) {
+            if (event.which === 13) {
+                const query = this.value;
+                if (query.trim() !== "") {
+                    window.location.href = `/search?q=${encodeURIComponent(query)}`;
+                }
+            }
+        });
         function redirect(event){
 			window.location.href = event.currentTarget.getAttribute('data-url');
 		}
     </script>
 </body>
 </html>
-
