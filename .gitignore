@@ -3,3 +3,4 @@ basics.txt
 *.pyc
 pkm
 data
+.env

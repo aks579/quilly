@@ -1,9 +1,9 @@
 certifi==2023.7.22
 charset-normalizer==2.0.12
 click==8.0.4
-dataclasses==0.8
-Flask==2.0.3
-Flask-WTF==1.0.1
+dataclasses
+Flask
+Flask-WTF
 idna==3.4
 importlib-metadata==4.8.3
 itsdangerous==2.0.1
