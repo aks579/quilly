@@ -1,6 +1,10 @@
 # Quilly
 A simple privacy-first, self-hosted note taking webapp, written in python.
 
+![list notes](screenshots/list.png)
+
+![read note](screenshots/read.png)
+
 ## Why
 
 Quilly is a no-frills, open-source markdown note-taking app. It keeps things simple in a world of feature-packed and bloated alternatives. Its minimal and straightforward and does only one job - helps in taking notes.
