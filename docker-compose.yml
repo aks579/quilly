@@ -1,0 +1,12 @@
+version: '3'
+services:
+
+  quilly:
+      build: .
+      container_name: quilly
+      ports:
+        - 5000:80
+      volumes:
+        - ./data:/app/data:rw
+      restart: always
+
