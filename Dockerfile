@@ -30,8 +30,8 @@ RUN mkdir -p ./app && \
 USER gunicorn
 
 # Expose the port
-EXPOSE 80
+EXPOSE 8000
 
 # Set the entrypoint and command
 ENTRYPOINT ["gunicorn"]
-CMD ["--bind", "0.0.0.0:80", "entrypoint:app"]
+CMD ["--bind", "0.0.0.0:8000", "entrypoint:app"]
