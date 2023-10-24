@@ -104,7 +104,7 @@ def delete(file):
 	form = DeleteNoteForm()
 	if form.validate_on_submit():
 		try:
-			if os.path.exists("file_path"):
+			if os.path.exists(file_path):
 				tags.delete(file)
 				os.remove(file_path)
 		except IOError as e:
