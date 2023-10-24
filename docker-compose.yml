@@ -1,0 +1,15 @@
+version: '3'
+services:
+
+  quilly:
+      build:
+        context: "."
+        args:
+          - "UID=1000"
+          - "GID=1000"
+      container_name: quilly
+      ports:
+        - 5000:8000
+      volumes:
+        - ./data:/app/data
+      restart: always

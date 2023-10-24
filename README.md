@@ -18,6 +18,8 @@ Quilly is a no-frills, open-source markdown note-taking app. It keeps things sim
 
 ## Installation
 
+### Without Docker
+
 * Clone or download the repository
 * Create and activate virtual environment
 * Install dependencies
@@ -27,6 +29,13 @@ pip install -r requirements.txt
 * Run
 ```python
 python3 run.py
+```
+
+### With Docker
+* Clone or download the repository
+* Run
+``` bash
+docker-compose up -d
 ```
 
 ## Configuration
