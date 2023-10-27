@@ -1,0 +1,9 @@
+pip-tools
+Flask
+Flask-WTF
+importlib-metadata
+Markdown
+Pygments
+oauthlib
+requests
+zipp
